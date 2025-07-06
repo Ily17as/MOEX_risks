@@ -1,0 +1,10 @@
+pandas~=2.3.0
+streamlit~=1.46.1
+altair~=5.5.0
+requests~=2.32.4
+httpx~=0.28.1
+numpy~=2.3.1
+uvicorn~=0.35.0
+APScheduler~=3.11.0
+fastapi~=0.115.14
+pydantic~=2.11.7
