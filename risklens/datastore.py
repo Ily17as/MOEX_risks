@@ -6,11 +6,9 @@ class DataStore:
                                   config={"external_file_cache_size": "8GB"})
 
     def ticks(self, symbol: str, date: str):
-        return self.con.execute("""
-            FROM ticks
-            WHERE regexp_extract(filename, 'symbol=([^/]+)', 1) = ?
-              AND regexp_extract(filename, 'date=([^/]+)',   1) = ?
-        """, [symbol, date]).df()
+        return self.con.execute(
+            "SELECT * FROM ticks WHERE symbol = ? AND date = ?", [symbol, date]
+        ).df()
 
     def bars(self, symbol: str, start: str, end: str):
         return self.con.execute("""
@@ -26,3 +24,4 @@ class DataStore:
             FROM factors WHERE symbol = ?
               AND ts BETWEEN ? AND ?
         """, [symbol, start, end]).df()
+
