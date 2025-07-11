@@ -1,12 +1,13 @@
 import sqlite3
 from pathlib import Path
+from risklens.config import SQLITE_DB_PATH
 from datetime import date
 
 import pandas as pd
 import streamlit as st
 import altair as alt   # для графика
 
-DB_PATH = Path("../risklens.db")            # поменяйте, если БД в другом месте
+DB_PATH = Path(SQLITE_DB_PATH)            # поменяйте, если БД в другом месте
 
 # ──────────────────────── helpers ───────────────────────── #
 @st.cache_data

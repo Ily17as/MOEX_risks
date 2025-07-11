@@ -1,6 +1,7 @@
 import duckdb, pathlib as p, glob, os
+from risklens.config import DUCKDB_PATH
 
-db = duckdb.connect("risk.db", config={"external_file_cache_size":"8GB"})
+db = duckdb.connect(DUCKDB_PATH, config={"external_file_cache_size": "8GB"})
 
 TICKS_ROOT = "data/ticks"
 BARS_ROOT  = "data/bars"
