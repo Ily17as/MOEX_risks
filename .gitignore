@@ -1,0 +1,24 @@
+# Build artifacts
+build/
+dist/
+*.egg-info/
+*.pyc
+__pycache__/
+
+# Virtual environments
+venv/
+.venv/
+.env/
+ENV/
+
+# IDE folders
+.idea/
+
+# Database files
+*.db
+
+# Data directories
+# Ignore the data directory at the project root and any nested
+# data directories inside submodules
+/data/
+*/data/
