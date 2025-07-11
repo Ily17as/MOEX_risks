@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "risklens"
+version = "0.1.0"
+description = "Portfolio VaR/CVaR analytics for MOEX"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Ilyas Galiev"}]
+dependencies = [
+    "pandas~=2.3.0",
+    "streamlit~=1.46.1",
+    "altair~=5.5.0",
+    "requests~=2.32.4",
+    "httpx~=0.28.1",
+    "numpy~=2.3.1",
+    "uvicorn~=0.35.0",
+    "APScheduler~=3.11.0",
+    "fastapi~=0.115.14",
+    "pydantic~=2.11.7",
+]
+
+[project.scripts]
+risklens-api = "risklens.cli:run_api"
+risklens-app = "risklens.cli:run_app"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["risklens*"]
+exclude = ["old_stuff*"]

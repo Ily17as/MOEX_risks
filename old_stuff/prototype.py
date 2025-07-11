@@ -12,7 +12,13 @@ import pandas as pd
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel, Field
-from greece import delta as opt_delta, gamma as opt_gamma, vega as opt_vega, theta as opt_theta, rho as opt_rho
+from risklens.greeks import (
+    delta as opt_delta,
+    gamma as opt_gamma,
+    vega as opt_vega,
+    theta as opt_theta,
+    rho as opt_rho,
+)
 
 DB_PATH = "../risklens.db"
 DEFAULT_CONFIDENCE = 0.99
