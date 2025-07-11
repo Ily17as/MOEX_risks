@@ -13,8 +13,9 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel, Field
 from greece import delta as opt_delta, gamma as opt_gamma, vega as opt_vega, theta as opt_theta, rho as opt_rho
+from risklens.config import SQLITE_DB_PATH
 
-DB_PATH = "risklens.db"
+DB_PATH = SQLITE_DB_PATH
 DEFAULT_CONFIDENCE = 0.99
 LOOKBACK_DAYS = 365
 JOB_HOUR, JOB_MINUTE = 9, 5
