@@ -1,7 +1,8 @@
 import duckdb, pathlib as p
+from .config import DUCKDB_PATH
 
 class DataStore:
-    def __init__(self, db_path="risk.db"):
+    def __init__(self, db_path=DUCKDB_PATH):
         self.con = duckdb.connect(db_path,
                                   config={"external_file_cache_size": "8GB"})
 

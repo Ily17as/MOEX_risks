@@ -21,7 +21,7 @@
 |---------------------|--------------------------------------------|
 | `prototype.py`      | Основной API-сервер и расчётная логика     |
 | `portfolio_app.py`  | Интерфейс Streamlit для ввода портфеля     |
-| `risklens.db`       | SQLite база данных                         |
+| `risklens/config.py`| Пути к базам данных                        |
 
 ---
 
@@ -31,5 +31,22 @@
 git clone https://github.com/yourname/risklens
 cd risklens
 python -m venv .venv
+source .venv/bin/activate     # для Linux/MacOS
+# или
 .venv\\Scripts\\activate     # для Windows
 pip install -r requirements.txt
+```
+
+## ▶️ Запуск
+
+### API сервер
+
+```bash
+python prototype.py
+```
+
+### Веб-интерфейс
+
+```bash
+streamlit run portfolio_app.py
+```
