@@ -2,7 +2,7 @@ import polars as pl, sys, pathlib as p
 
 symbol, date, freq = sys.argv[1:]  # SBER 2025-07-09 1m
 src = f"data/ticks/symbol={symbol}/date={date}/*.parquet"
-out_dir = p.Path("data") / "bars" / f"freq={freq}" / f"symbol={symbol}" / f"date={date}"
+out_dir = p.Path("../data") / "bars" / f"freq={freq}" / f"symbol={symbol}" / f"date={date}"
 out_dir.mkdir(parents=True, exist_ok=True)
 
 bars = (
