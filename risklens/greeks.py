@@ -1,10 +1,12 @@
 import math
-from datetime import date
+from math import erf, sqrt, exp, pi
 
-try:
-    from scipy.stats import norm
-except ImportError:
-    raise ImportError("scipy is required for greece calculations: pip install scipy")
+def _cdf(x: float) -> float:
+    return 0.5 * (1 + erf(x / sqrt(2)))
+
+
+def _pdf(x: float) -> float:
+    return exp(-0.5 * x * x) / sqrt(2 * pi)
 
 
 def _d1(S: float, K: float, T: float, r: float, sigma: float) -> float:
@@ -21,23 +23,23 @@ def call_price(S: float, K: float, T: float, r: float, sigma: float) -> float:
     """Black-Scholes price for a European call option."""
     d1 = _d1(S, K, T, r, sigma)
     d2 = _d2(S, K, T, r, sigma)
-    return S * norm.cdf(d1) - K * math.exp(-r * T) * norm.cdf(d2)
+    return S * _cdf(d1) - K * math.exp(-r * T) * _cdf(d2)
 
 
 def put_price(S: float, K: float, T: float, r: float, sigma: float) -> float:
     """Black-Scholes price for a European put option."""
     d1 = _d1(S, K, T, r, sigma)
     d2 = _d2(S, K, T, r, sigma)
-    return K * math.exp(-r * T) * norm.cdf(-d2) - S * norm.cdf(-d1)
+    return K * math.exp(-r * T) * _cdf(-d2) - S * _cdf(-d1)
 
 
 def delta(S: float, K: float, T: float, r: float, sigma: float, option_type: str = "call") -> float:
     """Option Delta: sensitivity of price to underlying"""
     d1 = _d1(S, K, T, r, sigma)
     if option_type.lower() == "call":
-        return float(norm.cdf(d1))
+        return float(_cdf(d1))
     elif option_type.lower() == "put":
-        return float(norm.cdf(d1) - 1)
+        return float(_cdf(d1) - 1)
     else:
         raise ValueError("option_type must be 'call' or 'put'")
 
@@ -45,25 +47,25 @@ def delta(S: float, K: float, T: float, r: float, sigma: float, option_type: str
 def gamma(S: float, K: float, T: float, r: float, sigma: float) -> float:
     """Option Gamma: rate of change of Delta"""
     d1 = _d1(S, K, T, r, sigma)
-    return float(norm.pdf(d1) / (S * sigma * math.sqrt(T)))
+    return float(_pdf(d1) / (S * sigma * math.sqrt(T)))
 
 
 def vega(S: float, K: float, T: float, r: float, sigma: float) -> float:
     """Option Vega: sensitivity of price to volatility (per 1 vol)"""
     d1 = _d1(S, K, T, r, sigma)
-    return float(S * norm.pdf(d1) * math.sqrt(T))
+    return float(S * _pdf(d1) * math.sqrt(T))
 
 
 def theta(S: float, K: float, T: float, r: float, sigma: float, option_type: str = "call") -> float:
     """Option Theta: time decay (per year)"""
     d1 = _d1(S, K, T, r, sigma)
     d2 = _d2(S, K, T, r, sigma)
-    pdf_d1 = norm.pdf(d1)
+    pdf_d1 = _pdf(d1)
     term1 = -S * pdf_d1 * sigma / (2 * math.sqrt(T))
     if option_type.lower() == "call":
-        term2 = -r * K * math.exp(-r * T) * norm.cdf(d2)
+        term2 = -r * K * math.exp(-r * T) * _cdf(d2)
     elif option_type.lower() == "put":
-        term2 = r * K * math.exp(-r * T) * norm.cdf(-d2)
+        term2 = r * K * math.exp(-r * T) * _cdf(-d2)
     else:
         raise ValueError("option_type must be 'call' or 'put'")
     return float(term1 + term2)
@@ -73,9 +75,9 @@ def rho(S: float, K: float, T: float, r: float, sigma: float, option_type: str =
     """Option Rho: sensitivity of price to interest rate"""
     d2 = _d2(S, K, T, r, sigma)
     if option_type.lower() == "call":
-        return float(K * T * math.exp(-r * T) * norm.cdf(d2))
+        return float(K * T * math.exp(-r * T) * _cdf(d2))
     elif option_type.lower() == "put":
-        return float(-K * T * math.exp(-r * T) * norm.cdf(-d2))
+        return float(-K * T * math.exp(-r * T) * _cdf(-d2))
     else:
         raise ValueError("option_type must be 'call' or 'put'")
 

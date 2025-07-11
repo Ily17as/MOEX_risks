@@ -12,9 +12,16 @@ import pandas as pd
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel, Field
-from greece import delta as opt_delta, gamma as opt_gamma, vega as opt_vega, theta as opt_theta, rho as opt_rho
+from .greeks import (
+    delta as opt_delta,
+    gamma as opt_gamma,
+    vega as opt_vega,
+    theta as opt_theta,
+    rho as opt_rho,
+)
+from .config import SQLITE_DB_PATH
 
-DB_PATH = "../risklens.db"
+DB_PATH = str(SQLITE_DB_PATH)
 DEFAULT_CONFIDENCE = 0.99
 LOOKBACK_DAYS = 365
 JOB_HOUR, JOB_MINUTE = 9, 5
@@ -323,4 +330,4 @@ async def run_now():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("prototype:app", host="127.0.0.1", port=8000)
+    uvicorn.run("risklens.api:app", host="127.0.0.1", port=8000)

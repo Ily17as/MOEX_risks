@@ -19,8 +19,8 @@
 
 | Файл / модуль       | Назначение                                 |
 |---------------------|--------------------------------------------|
-| `prototype.py`      | Основной API-сервер и расчётная логика     |
-| `portfolio_app.py`  | Интерфейс Streamlit для ввода портфеля     |
+| `risklens/api.py`           | Основной API-сервер и расчётная логика     |
+| `risklens/streamlit_app.py` | Интерфейс Streamlit для ввода портфеля     |
 | `risklens/config.py`| Пути к базам данных                        |
 
 ---
@@ -34,7 +34,7 @@ python -m venv .venv
 source .venv/bin/activate     # для Linux/MacOS
 # или
 .venv\\Scripts\\activate     # для Windows
-pip install -r requirements.txt
+pip install -e .
 ```
 
 ## ▶️ Запуск
@@ -42,11 +42,11 @@ pip install -r requirements.txt
 ### API сервер
 
 ```bash
-python prototype.py
+risklens-api
 ```
 
 ### Веб-интерфейс
 
 ```bash
-streamlit run portfolio_app.py
+risklens-app
 ```
